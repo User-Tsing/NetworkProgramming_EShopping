@@ -1,0 +1,59 @@
+<!-- checkout.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>订单结算</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'guide.css' %}">
+    <link rel="stylesheet" href="{% static 'style_checkout_delicated.css' %}">
+</head>
+<body>
+    <div class="main-a">
+        <div class="logo">
+            <a href="/">E-Shop</a>
+        </div>
+        <div class="user-profile-container">
+            {% if user == None %}
+                <div class="auth-links">
+                    <a href="/login/">登录</a>
+                    <a href="/register/">注册</a>
+                </div>
+            {% else %}
+                <div class="user-profile">
+                    <form action="{% url 'logout' %}" method="post" class="logout-form">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-button">退出登录</button>
+                    </form>
+                    <div class="auth-links">
+                        <a href="{% url 'chat_list' %}">消息中心</a>
+                    </div>
+                    <div class="avatar-container">
+                        <a href="/main/">
+                            <img src="{{ user.avatar.url }}" class="user-avatar" alt="头像">
+                        </a>
+                    </div>
+                    <p class="username">{{ user.id_name }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <h1>订单确认</h1>
+    <div class="order-summary">
+        {% for item in order_items %}
+        <div class="order-item">
+            <img src="{{ item.product.image.url }}">
+            <p>{{ item.product.title }}</p>
+            <p>单价: ¥{{ item.product.goods_price|floatformat:2 }}</p>
+            <p>数量: {{ item.quantity }}</p>
+            <label for="note_{{ item.id }}">备注:</label>
+            <input type="text" id="note_{{ item.id }}" name="note_{{ item.id }}">
+        </div>
+        {% endfor %}
+        <div class="total-price">
+            总计: ¥{{ total_price|floatformat:2 }}
+        </div>
+        <button onclick="confirmPayment()">确认支付</button>
+    </div>
+    <script src="{% static 'checkout.js' %}"></script>
+</body>
+</html>

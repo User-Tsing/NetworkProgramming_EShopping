@@ -1,0 +1,228 @@
+/* static/style_chatroom.css */
+/* 聊天室增强样式 - 与guide.css完美兼容 */
+
+:root {
+    --chat-primary: var(--primary-color); /* 继承导航栏主色 */
+    --chat-accent: #4ecdc4; /* 辅助色 */
+    --chat-bg: #f8fafd;
+    --sent-bg: linear-gradient(135deg, var(--chat-primary), var(--secondary-color));
+    --received-bg: linear-gradient(135deg, #ffffff, #f5f7ff);
+}
+
+/* 聊天容器重构 */
+.chat-container {
+    height: calc(100vh - var(--nav-height) - 40px);
+    max-width: 1200px;
+    margin: 20px auto;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px -12px rgba(37, 99, 235, 0.15);
+    background: white;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 头部优化 */
+.chat-header {
+    padding: 18px 30px;
+    background: var(--chat-bg);
+    border-bottom: 1px solid rgba(203, 213, 225, 0.3);
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.back-link {
+    color: var(--text-dark);
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.back-link:hover {
+    background: rgba(203, 213, 225, 0.2);
+    transform: translateX(-3px);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-left: 20px;
+}
+
+.user-info .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+}
+
+.user-info:hover .avatar {
+    transform: scale(1.05);
+}
+
+/* 消息区域增强 */
+.messages-wrapper {
+    flex: 1;
+    padding: 30px;
+    background: var(--chat-bg);
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+/* 自定义滚动条 */
+.messages-wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.messages-wrapper::-webkit-scrollbar-track {
+    background: rgba(203, 213, 225, 0.1);
+}
+
+.messages-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(203, 213, 225, 0.4);
+    border-radius: 4px;
+}
+
+/* 消息气泡系统 */
+.message {
+    display: flex;
+    gap: 12px;
+    margin: 18px 0;
+    max-width: 75%;
+    animation: messageAppear 0.3s ease;
+}
+
+@keyframes messageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.message.sent {
+    margin-left: auto;
+    flex-direction: row-reverse;
+}
+
+.message-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    align-self: flex-end;
+    flex-shrink: 0;
+    border: 2px solid white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.message-content {
+    position: relative;
+    padding: 14px 20px;
+    border-radius: 20px;
+    line-height: 1.5;
+    min-width: 120px;
+    max-width: 600px;
+    word-break: break-word;
+}
+
+/* 接收消息样式 */
+.message.received .message-content {
+    background: var(--received-bg);
+    border: 1px solid rgba(203, 213, 225, 0.3);
+    border-radius: 20px 20px 20px 6px;
+}
+
+/* 发送消息样式 */
+.message.sent .message-content {
+    background: var(--sent-bg);
+    color: white;
+    border-radius: 20px 20px 6px 20px;
+}
+
+/* 时间戳优化 */
+.timestamp {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.message.received .timestamp {
+    color: rgba(100, 116, 139, 0.8);
+}
+
+/* 输入区域增强 */
+.message-input {
+    padding: 20px 30px;
+    background: white;
+    border-top: 1px solid rgba(203, 213, 225, 0.3);
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+}
+
+.message-input textarea {
+    flex: 1;
+    min-height: 48px;
+    max-height: 120px;
+    padding: 12px 20px;
+    border: 1px solid rgba(203, 213, 225, 0.5);
+    border-radius: 16px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.message-input textarea:focus {
+    border-color: var(--chat-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.message-input button {
+    background: var(--sent-bg);
+    height: 48px;
+    padding: 0 28px;
+    font-weight: 600;
+    border-radius: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.message-input button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .chat-container {
+        margin: 10px;
+        height: calc(100vh - var(--nav-height) - 20px);
+    }
+
+    .messages-wrapper {
+        padding: 20px 15px;
+    }
+
+    .message {
+        max-width: 88%;
+    }
+
+    .message-avatar {
+        width: 32px;
+        height: 32px;
+    }
+
+    .message-input {
+        padding: 15px;
+    }
+}
+
+

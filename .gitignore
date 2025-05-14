@@ -1,0 +1,8 @@
+.idea
+settings.py
+db.sqlite3
+mysite/__pycache__/
+
+[user]
+    name = 22123729
+    email = 1810871621@qq.com

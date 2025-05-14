@@ -1,0 +1,15 @@
+<!-- 继承home.html的结构，只修改标题和添加结果提示 -->
+{% extends "home.html" %}
+
+{% block title %}搜索结果{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3 style="margin-bottom: 20px;">
+        搜索 "{{ query }}" 的结果 (共 {{ items.count }} 条)
+        <a href="/" style="font-size: 14px; margin-left: 15px;">返回首页</a>
+    </h3>
+    <!-- 复用商品展示代码 -->
+    {{ block.super }}
+</div>
+{% endblock %}

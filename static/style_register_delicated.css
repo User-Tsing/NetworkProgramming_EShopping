@@ -1,0 +1,106 @@
+/* static/register.css */
+:root {
+    --auth-primary: #4f46e5;
+    --auth-secondary: #6366f1;
+    --auth-bg: #f8fafc;
+    --auth-text: #1e293b;
+}
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    padding: 2rem;
+    margin-top: var(--nav-height); /* 保持与导航栏间距 */
+}
+
+.auth-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    transition: transform 0.3s ease;
+}
+
+.auth-card:hover {
+    transform: translateY(-5px);
+}
+
+.auth-title {
+    color: var(--auth-text);
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+}
+
+.auth-title::after {
+    content: "";
+    position: absolute;
+    bottom: -0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: var(--auth-primary);
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 0.875rem;
+    margin-bottom: 1.25rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.auth-form input:focus {
+    border-color: var(--auth-primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    outline: none;
+}
+
+.auth-form button {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--auth-primary), var(--auth-secondary));
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.auth-form button:hover {
+    opacity: 0.95;
+    transform: translateY(-1px);
+}
+
+#errorMessage {
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 1rem;
+    text-align: center;
+    min-height: 1.5rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 1.5rem;
+        border-radius: 1rem;
+    }
+    
+    .auth-title {
+        font-size: 1.5rem;
+    }
+}

@@ -1,0 +1,49 @@
+/* static/login.css */
+/* 共用注册界面的基础样式 */
+@import "style_register_delicated.css"; 
+
+:root {
+    --auth-primary: #3b82f6; /* 使用不同主色区分登录界面 */
+    --auth-secondary: #60a5fa;
+}
+
+.login-extra {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #64748b;
+}
+
+.login-extra a {
+    color: var(--auth-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.login-extra a:hover {
+    color: var(--auth-secondary);
+    text-decoration: underline;
+}
+
+.auth-form input[type="password"] {
+    letter-spacing: 0.1em;
+}
+
+/* 社交登录分隔线 */
+.auth-divider {
+    display: flex;
+    align-items: center;
+    margin: 2rem 0;
+    color: #94a3b8;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.auth-divider span {
+    padding: 0 1rem;
+}

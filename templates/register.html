@@ -1,0 +1,55 @@
+<!-- authentication/templates/authentication/register.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'guide.css' %}">
+    <link rel="stylesheet" href="{% static 'style_register_delicated.css' %}">
+</head>
+<body>
+    <div class="main-a">
+        <div class="logo">
+            <a href="/">E-Shop</a>
+        </div>
+        <div class="search-container">
+            <form method="GET" action="/search/">
+                <input type="text" name="q" class="search-input" 
+                    placeholder="搜索商品..." value="{{ request.GET.q }}">
+                <button type="submit" class="search-button">搜索</button>
+            </form>
+        </div>
+        <div class="user-profile-container">
+            <div class="auth-links">
+                <a href="/login/">登录</a>
+                <a href="/register/">注册</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="auth-container">
+        <div class="auth-card">
+            <h1 class="auth-title">注册 / Register</h1>
+            <form id="registerForm" class="auth-form">
+                {% csrf_token %}
+                <span>用户名:</span>
+                <input type="text" name="username" placeholder="用户名 / Username" required>
+                <span>邮箱:</span>
+                <input type="email" name="email" placeholder="邮箱 / Email" required>
+                <span>设定密码:</span>
+                <input type="password" name="password1" placeholder="密码 / Password" required>
+                <span>确认密码:</span>
+                <input type="password" name="password2" placeholder="确认密码 / Confirm Password" required>
+                <span>昵称ID:</span>
+                <input type="text" name="id_name" placeholder="momo" required>
+                <button type="submit">注册 / Register</button>
+            </form>
+            <p id="errorMessage"></p>
+        </div>
+    </div>
+    
+    <script src="{% static 'register.js' %}"></script>
+</body>
+</html>
+
+<!-- 【人机】注册界面 -->

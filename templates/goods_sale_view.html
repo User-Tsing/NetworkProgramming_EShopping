@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>模拟电商平台网页设计：directed by STAssn</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'guide.css' %}">
+        <link rel="stylesheet" href="{% static 'style_goodssaleview_delicated.css' %}">
+        <link rel="stylesheet" href="{% static 'style_goodssaleview_added.css' %}">
+    </head>
+    <body>
+        <div class="main-a">
+            <div class="logo">
+                <a href="/">E-Shop</a>
+            </div>
+            <div class="search-container">
+                <form method="GET" action="/search/">
+                    <input type="text" name="q" class="search-input" 
+                        placeholder="搜索商品..." value="{{ request.GET.q }}">
+                    <button type="submit" class="search-button">搜索</button>
+                </form>
+            </div>
+            <div class="user-profile-container">
+                {% if user == None %}
+                    <div class="auth-links">
+                        <a href="/login/">登录</a>
+                        <a href="/register/">注册</a>
+                    </div>
+                {% else %}
+                    <div class="user-profile">
+                        <form action="{% url 'logout' %}" method="post" class="logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-button">退出登录</button>
+                        </form>
+                        <div class="auth-links">
+                            <a href="{% url 'chat_list' %}">消息中心</a>
+                        </div>
+                        <div class="avatar-container">
+                            <a href="/main/">
+                                <img src="{{ user.avatar.url }}" class="user-avatar" alt="头像">
+                            </a>
+                        </div>
+                        <p class="username">{{ user.id_name }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="container">
+            <h3>我的商品</h3>
+            {% for good in goods %}
+                <div class="order-item">
+                    <div class="content-item">
+                        <div class="item-image">
+                            <a href="{% url 'detail' good.id %}">
+                                <img src="{{ good.image.url }}" alt="{{ good.title }}">
+                            </a>
+                        </div>
+                        <div class="item-info">
+                            <h2>{{ good.title }}</h2>
+                            <p class="simple-desc">{{ good.simple_description }}</p>
+                            <div class="item-meta">
+                                <p class="price">¥{{ good.goods_price }}</p>
+                            </div>
+                            <div class="item-meta">
+                                <p class="stock">库存: {{ good.goods_rest_num }}</p>
+                                <p class="stock">已售: {{ good.goods_sale_num }}</p>
+                                <p class="timestamp">{{ good.created_at|date:"Y-m-d H:i" }}</p>
+                            </div>
+                            <div class="item-actions">
+                                <button class="edit-btn" onclick="openEditGoodsModal({{ good.id }})">编辑商品</button>
+                                <button class="delist-btn" onclick="delistGoods({{ good.id }})">下架商品</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <h3>销售订单</h3>
+            {% for order in orders %}
+            <div class="order-card">
+                <div class="order-header">
+                    <span>订单号：{{ order.id }}</span>
+                    <span class="status">{{ order.get_status_display }}</span>
+                    <a href="{% url 'main_land' order.custom_user.username %}">
+                        <span>买家：{{ order.custom_user.id_name }}</span>
+                    </a>
+                    <span>总金额：¥{{ order.total_price|floatformat:2 }}</span>
+                </div>
+                
+                {% for item in order.order_item_set.all %}
+                <div class="order-item">
+                    <div class="content-item">
+                        <div class="item-image">
+                            <a href="{% url 'detail' item.product.id %}">
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.title }}">
+                            </a>
+                        </div>
+                        <div class="item-info">
+                            <h4>{{ item.product.title }}</h4>
+                            <p>单价：¥{{ item.price|floatformat:2 }} × {{ item.quantity }}</p>
+                            <p>小计：¥{{ item.all_price|floatformat:2 }}</p>
+                            <p>买家备注：{{ item.note|default:"无" }}</p>
+                             <!-- <p>买家备注：{{ item.order.note }}</p> -->
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <form action="{% url 'check_order' order.id %}" method="post" class="order-actions">
+                    {% if order.status == 'P' %}
+                    <div>
+                        {% csrf_token %}
+                        <button type="submit">发货处理</button>
+                    </div>
+                    {% elif order.status == 'S' %}
+                    <div>
+                        <button type="submit" disabled>已发货</button>
+                    </div>
+                    {% else %}
+                    <div>
+                        <button type="submit" disabled>对方已签收</button>
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+            {% empty %}
+            <p class="empty">暂无销售记录</p>
+            {% endfor %}
+        </div>
+        <div id="goodsEditModal" class="modal_goods">
+            <div class="modal_goods-content">
+                <span class="close" onclick="closeGoodsModal()">&times;</span>
+                <form id="goodsEditForm" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" id="editGoodsId">
+                    
+                    <div class="form-group">
+                        <label>商品名称</label>
+                        <input type="text" name="title" id="editTitle" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>简略描述</label>
+                        <textarea name="simple_description" id="editSimpleDesc"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>详细描述</label>
+                        <textarea name="description" id="editDesc"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>价格</label>
+                        <input type="number" step="0.01" name="price" id="editPrice" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>原价</label>
+                        <input type="number" step="0.01" name="origin_price" id="editOriginalPrice" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>库存</label>
+                        <input type="number" name="stock" id="editStock" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>产地</label>
+                        <input type="text" name="from_location" id="editLocation">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>商品图片</label>
+                        <input type="file" name="image" accept="image/*">
+                    </div>
+                    
+                    <button type="submit">保存修改</button>
+                </form>
+            </div>
+        </div>
+        <script src="{% static 'goods_sale_view.js' %}"></script>
+    </body>
+</html>

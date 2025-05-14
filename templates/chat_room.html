@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}与{{ other_user.id_name }}的对话{% endblock %}
+
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'style_chatroom_delicated.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="chat-container">
+    <p>
+        <p></p>
+    </p>
+    <div class="chat-header">
+        <a href="{% url 'chat_list' %}" class="back-link">← 返回列表</a>
+        <div class="user-info">
+            <a href="{% url 'main_land' username=conversation.other_user.username %}">
+                <img src="{{ conversation.other_user.avatar.url }}" class="avatar">
+            </a>
+            <h2>{{ conversation.other_user.id_name }}</h2>
+
+            <span>和</span>
+
+            <a href="{% url 'main_land' username=request.user.username %}">
+                <img src="{{ request.user.custom_user.avatar.url }}" class="avatar">
+            </a>
+            <h2>{{ request.user.custom_user.id_name }}</h2>
+
+            <span>的对话</span>
+        </div>
+    </div>
+
+    <div class="messages-wrapper" id="messagesContainer">
+        {% for message in messages %}
+        <div class="message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
+            <img src="{{ message.sender_custom_user.avatar.url }}" class="message-avatar">
+            <div class="message-content">
+                <p>{{ message.content }}</p>
+                <span class="timestamp">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M13 7h-2v6h6v-2h-4z"></path></svg>
+                    {{ message.timestamp|date:"H:i" }}
+                </span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="message-input">
+        <textarea id="messageInput" placeholder="输入消息..."></textarea>
+        <button onclick="sendMessage({{ conversation.other_user.id }})">发送</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'chat.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,358 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.content-item {
+    background: rgba(225,75,0,0.1);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.item-image {
+    flex: 0 0 200px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-info {
+    flex: 1;
+}
+
+.timestamp {
+    color: #666;
+    font-size: 0.9em;
+    text-align: right;
+}
+
+.stock {
+    color: #666;
+    font-size: 0.9em;
+    text-align: right;
+}
+
+.price {
+    color: #FF0000;
+    font-size: 1.5em;
+    text-align: right;
+}
+
+
+/* static/style_2.css */
+.detail-image {  /* 添加容器尺寸定义 */
+    width: 100%;
+    height: 400px;  /* 固定高度或使用max-height */
+    margin: 20px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;  /* 为子元素定位准备 */
+}
+
+.detail-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* 保持比例填充容器 */
+    position: absolute;  /* 使用绝对定位确保填充 */
+    top: 0;
+    left: 0;
+}
+
+.detail-content {
+    margin: 20px 0;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.detail-content img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.meta {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 15px;
+}
+
+
+/* 导航栏样式 */
+.main-a {
+    position: relative;
+    background: linear-gradient(to right, #6110c4, #4ecdc4);
+    padding: 0 20px;
+    height: 60px;
+    display: flex;
+    /* justify-content: flex-end; */
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 用户信息容器 */
+.user-profile {
+    position: absolute;
+    right: 20px;         /* 距右侧距离 */
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 1000;       /* 确保在最顶层 */
+}
+
+.user-profile img {
+    width: 50px !important;   /* 直接指定像素尺寸 */
+    height: 50px !important;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    object-fit: cover;
+}
+
+/* 头像容器 */
+.avatar-container {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid white;
+}
+
+/* 头像图像 */
+.user-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 用户名样式 */
+.username {
+    margin: 0;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* 登录注册链接 */
+.auth-links {
+    display: flex;
+    gap: 20px;
+}
+
+.auth-links a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.auth-links a:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+
+
+/* static/style_home.css */
+.add-to-cart {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.add-to-cart input[type="number"] {
+    width: 60px;
+    padding: 8px;
+    margin-right: 10px;
+}
+
+.add-to-cart button {
+    background: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-to-cart button:hover {
+    background: #45a049;
+}
+
+.search-container {
+    margin-right: 30px;
+    /* display: flex; */
+    flex: 1;
+    /* gap: 10px; */
+    max-width: 600px;
+}
+
+.search-input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 300px;
+}
+
+.search-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+
+
+
+.order-card {
+    background: linear-gradient(to right, #6110c4, #FF2F00);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 2%;
+    padding: 1%;
+}
+
+.order-item {
+    background: linear-gradient(to right, #FFFFFF, #FFFFF0);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 2%;
+    padding: 1%;
+}
+
+.order_image {
+    flex: 0 0 200px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.order_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* 评价模块 */
+.reviews-section {
+    margin-top: 40px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.review-form {
+    margin-bottom: 30px;
+}
+
+.rating-input select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+}
+
+.review-form textarea {
+    width: 100%;
+    height: 100px;
+    margin: 10px 0;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.review-form button {
+    background: #4CAF50;
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.review-item {
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.review-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.review-rating {
+    color: #ffd700;
+    font-size: 1.2em;
+}
+
+.review-time {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.review-comment {
+    color: #333;
+    margin: 0;
+}
+
+.review-notice {
+    color: #666;
+    padding: 10px;
+    background: #fff3cd;
+    border-radius: 4px;
+}
+
+
+.logout-form {
+    display: inline;
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    cursor: pointer;
+    font: inherit;
+}
+
+.logout-button:hover {
+    background: rgba(255,255,255,0.2);
+}

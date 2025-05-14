@@ -1,0 +1,205 @@
+<!-- detail.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ item.title }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style_detail_delicated.css' %}">
+    <link rel="stylesheet" href="{% static 'guide.css' %}">
+</head>
+<body>
+    <div class="main-a">
+            <div class="logo">
+                <a href="/">E-Shop</a>
+            </div>
+            <div class="search-container">
+                <form method="GET" action="/search/">
+                    <input type="text" name="q" class="search-input" 
+                        placeholder="搜索商品..." value="{{ request.GET.q }}">
+                    <button type="submit" class="search-button">搜索</button>
+                </form>
+            </div>
+            <div class="user-profile-container">
+                {% if user == None %}
+                    <div class="auth-links">
+                        <a href="/login/">登录</a>
+                        <a href="/register/">注册</a>
+                    </div>
+                {% else %}
+                    <div class="user-profile">
+                        <form action="{% url 'logout' %}" method="post" class="logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-button">退出登录</button>
+                        </form>
+                        <div class="auth-links">
+                            <a href="{% url 'chat_list' %}">消息中心</a>
+                        </div>
+                        <div class="avatar-container">
+                            <a href="/main/">
+                                <img src="{{ user.avatar.url }}" class="user-avatar" alt="头像">
+                            </a>
+                        </div>
+                        <p class="username">{{ user.id_name }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    <div class="detail-container">
+        <section class="gallery-section">
+            <div class="main-gallery">
+                <img src="{{ item.image.url }}" alt="{{ item.title }}">
+            </div>
+        </section>
+        <section class="product-info">
+            <!-- <div class="detail-content">
+                <p>{{ item.simple_description }}</p>  
+                <p>{{ item.description }}</p>
+                <p>库存：{{ item.goods_rest_num }}</p>
+                <p>定价：{{ item.goods_price }}</p>
+                <a href="/main_land/{{ item.inserter }}/">
+                    <p>商家：{{ item.inserter_name }}</p>
+                </a>
+                <p class="meta">
+                    <span>发布日期：{{ item.created_at }}</span>
+                </p>
+            </div> -->
+            <div class="product-header">
+                <h1 class="product-title">{{ item.title }}</h1>
+                <div class="product-description">
+                    <p>{{ item.description }}</p>
+                </div>
+                <div class="price-section">
+                    <span class="current-price">￥{{ item.goods_price }}</span>
+                </div>
+            </div>
+
+            <!-- 元信息网格 -->
+            <div class="meta-grid">
+                <div class="meta-card">
+                    <div class="meta-label">库存数量</div>
+                    <div class="meta-value">{{ item.goods_rest_num }}件</div>
+                </div>
+                <div class="meta-card">
+                    <div class="meta-label">商品编号</div>
+                    <div class="meta-value">#{{ item.id }}</div>
+                </div>
+                <div class="meta-card">
+                    <div class="meta-label">上架时间</div>
+                    <div class="meta-value">{{ item.created_at|date:"Y-m-d" }}</div>
+                </div>
+                <div class="meta-card">
+                    <div class="meta-label">商家信息</div>
+                    <a href="/main_land/{{ item.inserter }}/" class="meta-value">
+                        {{ item.inserter_name }}
+                    </a>
+                </div>
+            </div>
+            <!-- <div class="add-to-cart">
+                <form id="addToCartForm" method="post" data-product-id="{{ item.id }}">
+                    {% csrf_token %}
+                    <input type="number" 
+                        name="quantity" 
+                        value="1" 
+                        min="1" 
+                        max="{{ item.goods_rest_num }}">  
+                    <button type="submit">加入购物车</button>
+                </form>
+                <div id="cart-message"></div>  
+            </div> -->
+            <!-- 加入购物车表单 -->
+            <div class="cart-form">
+                <form id="addToCartForm" method="post" data-product-id="{{ item.id }}">
+                    {% csrf_token %}
+                    <div class="quantity-control">
+                        <button type="button" class="quantity-btn minus-btn">-</button>
+                        <input type="number" 
+                            class="quantity-input"
+                            name="quantity" 
+                            value="1" 
+                            min="1" 
+                            max="{{ item.goods_rest_num }}"
+                            aria-label="购买数量">
+                        <button type="button" class="quantity-btn plus-btn">+</button>
+                        <button type="submit" class="add-cart-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                            <span>加入购物车</span>
+                        </button>
+                    </div>
+                    <div id="cart-message" role="alert"></div>
+                </form>
+            </div>
+        </section>
+        <section class="reviews-section">
+            <h3>商品评价（{{ reviews|length }}条）</h3>
+            
+            {% if can_review %}
+            <div class="review-form">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="rating-input">
+                        <label>评分：</label>
+                        <select name="rating" required>
+                            <option value="5">★★★★★</option>
+                            <option value="4">★★★★☆</option>
+                            <option value="3">★★★☆☆</option>
+                            <option value="2">★★☆☆☆</option>
+                            <option value="1">★☆☆☆☆</option>
+                        </select>
+                    </div>
+                    <textarea name="comment" placeholder="请输入您的评价..." required></textarea>
+                    <button type="submit" name="submit_review">提交评价</button>
+                </form>
+            </div>
+            {% elif request.user.is_authenticated %}
+            <p class="review-notice">※ 购买后可评价该商品，已提交过评价的不能重复评价</p>
+            {% endif %}
+            
+            <div class="review-list">
+                {% for review in reviews %}
+                <div class="review-item">
+                    <div class="review-header">
+                        <img src="{{ review.custom_user.avatar.url }}" class="review-avatar">
+                        <span class="review-user">{{ review.custom_user.id_name }}</span>
+                        <span class="review-rating">
+                        {% for _ in "12345" %}
+                            {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
+                        {% endfor %}
+                        </span>
+                        <span class="review-time">{{ review.created_at|date:"Y-m-d" }}</span>
+                    </div>
+                    <p class="review-comment">{{ review.comment }}</p>
+                </div>
+                {% empty %}
+                <p class="empty-reviews">暂无评价</p>
+                {% endfor %}
+            </div>
+        </section>
+        <a href="/">返回主页</a>
+    </div>
+    <script src='{% static "detail.js" %}'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const quantityInput = document.querySelector('.quantity-input');
+            const minusBtn = document.querySelector('.minus-btn');
+            const plusBtn = document.querySelector('.plus-btn');
+
+            minusBtn.addEventListener('click', function() {
+                let currentValue = parseInt(quantityInput.value);
+                if (currentValue > parseInt(quantityInput.min)) {
+                    quantityInput.value = currentValue - 1;
+                }
+            });
+
+            plusBtn.addEventListener('click', function() {
+                let currentValue = parseInt(quantityInput.value);
+                if (currentValue < parseInt(quantityInput.max)) {
+                    quantityInput.value = currentValue + 1;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

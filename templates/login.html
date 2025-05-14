@@ -1,0 +1,47 @@
+<!-- authentication/templates/authentication/login.html -->
+<!DOCTYPE html>
+<html>  <!-- 根结构 -->
+<head>  <!-- 头部：设定层类 -->
+    <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'guide.css' %}">
+    <link rel="stylesheet" href="{% static 'style_login_delicated.css' %}">  <!-- 指定版式文件：导入自static -->
+</head>
+<body>  <!-- 身部：可视化层类 -->
+    <div class="main-a">
+        <div class="logo">
+            <a href="/">E-Shop</a>
+        </div>
+        <div class="search-container">
+            <form method="GET" action="/search/">
+                <input type="text" name="q" class="search-input" 
+                    placeholder="搜索商品..." value="{{ request.GET.q }}">
+                <button type="submit" class="search-button">搜索</button>
+            </form>
+        </div>
+        <div class="user-profile-container">
+            <div class="auth-links">
+                <a href="/login/">登录</a>
+                <a href="/register/">注册</a>
+            </div>
+        </div>
+    </div>
+    <div class="auth-container">
+        <div class="auth-card">
+            <h1 class="auth-title">登录 / Login</h1>
+            <form id="loginForm" class="auth-form">  <!-- 表单大类，名称loginForm，在.js中整体监听 -->
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="用户名 / Username" required>  <!-- 类型：input输入框文本类，代号username，默认内容Username，在.js中以同名存入表单 -->
+                <input type="password" name="password" placeholder="密码 / Password" required>  <!-- 类型：input输入框密码类，代号password，默认内容Password，在.js中以同名存入表单 -->
+                <button type="submit">登录 / Login</button>  <!-- 类型：button按钮，无代号，在.js中监听submit信号 -->
+            </form>
+            <div class="login-extra">
+                <a href="/register/">没有账号？立即注册</a>
+            </div>
+            <p id="errorMessage"></p>
+        </div>
+    </div>
+    
+    <script src='{% static "login.js" %}'></script>  <!-- 指定操作文件：导入自static -->
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>临时首页</title>
+        {% load static %}
+        <link rel="stylesheet" href={% static "style.css" %}>  <!-- 导入版式集 -->
+        <script src={% static 'script_1.js' %}></script>
+    </head>
+    <body>
+        <h1>临时首页</h1>
+        <img src="../media/photo_1.jpg", width="700", height="700">
+        <button name="button_2">按钮页面跳转</button>
+        {% csrf_token %}
+    </body>
+</html>

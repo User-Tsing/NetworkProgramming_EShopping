@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>模拟电商平台网页设计：directed by STAssn</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'guide.css' %}">
+        <link rel="stylesheet" href="{% static 'style_developer_delicated.css' %}">
+    </head>
+    <body>
+        <div class="main-a">
+            <div class="logo">
+                <a href="/">E-Shop</a>
+            </div>
+            <div class="search-container">
+                <form method="GET" action="/search/">
+                    <input type="text" name="q" class="search-input" 
+                        placeholder="搜索商品..." value="{{ request.GET.q }}">
+                    <button type="submit" class="search-button">搜索</button>
+                </form>
+            </div>
+            <div class="user-profile-container">
+                {% if request.user == None %}
+                    <div class="auth-links">
+                        <a href="/login/">登录</a>
+                        <a href="/register/">注册</a>
+                    </div>
+                {% else %}
+                    <div class="user-profile">
+                        <form action="{% url 'logout' %}" method="post" class="logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-button">退出登录</button>
+                        </form>
+                        <div class="auth-links">
+                            <a href="{% url 'chat_list' %}">消息中心</a>
+                        </div>
+                        <div class="avatar-container">
+                            <a href="/main/">
+                                <img src="{{ request.user.custom_user.avatar.url }}" class="user-avatar" alt="头像">
+                            </a>
+                        </div>
+                        <p class="username">{{ request.user.custom_user.user.id_name }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <br><br><br><br><br><br>
+        <h1 style="text-align: center;">“开发者名单”</h1>
+        <div class="developer-display">
+            <div class="developer">
+                <img src="{% static 'to_show/developer.jpg' %}" alt="STAssn" class="developer-avatar">
+                <p class="developer-name">STAssn(T Li)</p>
+            </div>
+            <div class="developer">
+                <img src="{% static 'to_show/developer_2.jpg' %}" alt="YYang" class="developer-avatar">
+                <p class="developer-name">Y Yang</p>
+            </div>
+            <div class="developer">
+                <img src="{% static 'to_show/developer_3.jpg' %}" alt="HMao" class="developer-avatar">
+                <p class="developer-name">H Mao</p>
+            </div>
+        </div>
+
+        <script src='{% static "home.js" %}'></script>
+    </body>
+</html>

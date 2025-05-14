@@ -1,0 +1,196 @@
+/* static/style_chatlist_enhanced.css */
+/* 聊天列表增强样式 - 包含用户名片 */
+
+/* 用户名片容器 */
+.user-card {
+    max-width: 800px;
+    margin: 30px auto 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #ffffff 0%, #f9f9ff 100%);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px -6px rgba(37, 99, 235, 0.1);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    border: 1px solid rgba(203, 213, 225, 0.3);
+}
+
+/* 名片头像 */
+.user-card-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    object-fit: cover;
+}
+
+/* 名片信息 */
+.user-card-info {
+    flex: 1;
+}
+
+.user-card-name {
+    font-size: 1.4rem;
+    color: var(--text-dark);
+    margin: 0 0 8px 0;
+    font-weight: 600;
+}
+
+.user-card-bio {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* 聊天列表容器增强 */
+.chat-list-enhanced {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px -12px rgba(37, 99, 235, 0.1);
+    overflow: hidden;
+}
+
+/* 列表标题增强 */
+.chat-list-title {
+    padding: 20px 25px;
+    margin: 0;
+    font-size: 1.3rem;
+    color: var(--text-dark);
+    background: var(--chat-bg);
+    border-bottom: 1px solid rgba(203, 213, 225, 0.3);
+}
+
+/* 聊天项增强 */
+.chat-item-enhanced {
+    display: flex;
+    align-items: center;
+    padding: 18px 25px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.chat-item-enhanced:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 80px;
+    right: 25px;
+    bottom: 0;
+    height: 1px;
+    background: rgba(203, 213, 225, 0.3);
+}
+
+.chat-item-enhanced:hover {
+    background: var(--chat-bg);
+    transform: translateX(8px);
+}
+
+/* 聊天头像增强 */
+.chat-avatar-enhanced {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    margin-right: 18px;
+    object-fit: cover;
+    border: 2px solid white;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+}
+
+.chat-item-enhanced:hover .chat-avatar-enhanced {
+    transform: scale(1.08);
+}
+
+/* 聊天信息增强 */
+.chat-info-enhanced {
+    flex: 1;
+}
+
+.chat-info-enhanced h3 {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin: 0 0 6px 0;
+    font-weight: 500;
+}
+
+.last-message-enhanced {
+    color: var(--text-light);
+    font-size: 0.92rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 0;
+}
+
+.timestamp-enhanced {
+    position: absolute;
+    right: 25px;
+    top: 22px;
+    color: var(--text-light);
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+/* 空状态提示 */
+.empty-enhanced {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+/* 未读消息提示 */
+.unread-count {
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    position: absolute;
+    right: 25px;
+    top: 75%;
+    transform: translateY(-50%);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .user-card {
+        margin: 20px 15px 15px;
+        padding: 15px;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .user-card-avatar {
+        width: 72px;
+        height: 72px;
+    }
+
+    .chat-list-enhanced {
+        margin: 0 15px 30px;
+    }
+
+    .chat-item-enhanced {
+        padding: 15px;
+    }
+
+    .timestamp-enhanced {
+        position: static;
+        margin-top: 8px;
+        display: block;
+    }
+
+    .unread-count {
+        right: 15px;
+    }
+}
+
+

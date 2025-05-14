@@ -1,0 +1,341 @@
+/* 整体容器样式 */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding-top: 72px; /* 考虑导航栏高度 */
+}
+
+/* 主内容盒子样式 */
+.main_box {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin: 3% auto;
+    padding: 3%;
+    width: 80%;
+    max-width: 1000px;
+}
+
+/* 个人资料头部样式 */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.main_img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #4ecdc4;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.main_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-info h2 {
+    margin: 0;
+    cursor: pointer;
+    transition: color 0.3s;
+    font-size: 1.8em;
+    color: #333;
+}
+
+.profile-info h2:hover {
+    color: #4ecdc4;
+}
+
+.action-buttons {
+    margin-top: 15px;
+    display: flex;
+    gap: 15px;
+}
+
+.action-buttons button {
+    background: #4ecdc4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 0.9em;
+}
+
+.action-buttons button:hover {
+    background: #3aaeab;
+}
+
+/* 个人资料详情样式 */
+.profile-details {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.profile-details p {
+    margin: 10px 0;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #555;
+}
+
+/* 链接样式 */
+.main_box a {
+    display: block;
+    margin-top: 15px;
+    color: #4ecdc4;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-size: 1.1em;
+}
+
+.main_box a:hover {
+    color: #3aaeab;
+}
+
+/* 购物车部分样式 */
+.cart-section {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin: 3% auto;
+    padding: 3%;
+    width: 80%;
+    max-width: 1000px;
+}
+
+.cart-section h4 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.content-item_2 {
+    background: rgba(255, 255, 255, 1);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    transition: box-shadow 0.3s;
+}
+
+.content-item_2:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.item-image {
+    flex: 0 0 220px;
+    height: 160px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-info {
+    flex: 1;
+}
+
+.item-info h2 {
+    margin: 0;
+    font-size: 1.3em;
+    color: #333;
+}
+
+.item-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.price {
+    color: #FF0000;
+    font-size: 1.5em;
+}
+
+.stock {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.timestamp {
+    color: #999;
+    font-size: 0.8em;
+}
+
+/* 总价和结算按钮样式 */
+#real-time-total {
+    margin-top: 20px;
+    text-align: right;
+}
+
+#real-time-total p {
+    font-size: 1.3em;
+    color: #333;
+}
+
+.cart-section button {
+    background: #4ecdc4;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 1em;
+    margin-top: 20px;
+}
+
+.cart-section button:hover {
+    background: #3aaeab;
+}
+
+/* 模态窗口样式 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background: white;
+    margin: 15% auto;
+    padding: 30px;
+    width: 450px;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s;
+}
+
+.close:hover {
+    color: #333;
+}
+
+.edit-section {
+    display: none;
+}
+
+.edit-section.active {
+    display: block;
+}
+
+input[type="file"] {
+    margin: 15px 0;
+}
+
+textarea {
+    width: 100%;
+    height: 120px;
+    margin: 15px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    resize: none;
+}
+
+.modal-content button[type="submit"] {
+    background: #4ecdc4;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 1em;
+}
+
+.modal-content button[type="submit"]:hover {
+    background: #3aaeab;
+}
+
+
+
+.check_box {
+    /* 隐藏原生样式 */
+    appearance: none;
+    -webkit-appearance: none;
+    
+    /* 设定尺寸 */
+    width: 20px;
+    height: 20px;
+    
+    /* 基础样式 */
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    vertical-align: middle;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+/* 选中状态 */
+.check_box:checked {
+    background: #2196F3;
+    border-color: #2196F3;
+}
+
+/* 勾选标记 */
+.check_box:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* 聚焦状态 */
+.check_box:focus {
+    outline: 2px solid #90caf9;
+    outline-offset: 2px;
+}
+
+
+.bad_item {
+    display: inline-block;
+}
+
+.bad_item button {
+    background-color: #FF0808;
+}
+.bad_item button:hover {
+    background-color: #A70808;
+}
+

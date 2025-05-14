@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>模拟电商平台网页设计：directed by STAssn</title>
+        {% load static %}
+        <!-- <link rel="stylesheet" href="{% static 'style_home.css' %}"> -->
+         <link rel="stylesheet" href="{% static 'style_home_delicated.css' %}">
+    </head>
+    <body>
+        <div class="main-a">
+            <div class="logo">
+                <a href="/">E-Shop</a>
+            </div>
+            <div class="search-container">
+                <form method="GET" action="/search/">
+                    <input type="text" name="q" class="search-input" 
+                        placeholder="搜索商品..." value="{{ request.GET.q }}">
+                    <button type="submit" class="search-button">搜索</button>
+                </form>
+            </div>
+            <div class="user-profile-container">
+                {% if user == None %}
+                    <div class="auth-links">
+                        <a href="/login/">登录</a>
+                        <a href="/register/">注册</a>
+                    </div>
+                {% else %}
+                    <div class="user-profile">
+                        <form action="{% url 'logout' %}" method="post" class="logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-button">退出登录</button>
+                        </form>
+                        <div class="auth-links">
+                            <div class="message-center-wrapper">
+                                <a href="{% url 'chat_list' %}" class="message-center-link">消息中心</a>
+                                {% if has_unread_messages %}
+                                    <span class="unread-dot-absolute"></span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="avatar-container">
+                            <a href="/main/">
+                                <img src="{{ user.avatar.url }}" class="user-avatar" alt="头像">
+                            </a>
+                        </div>
+                        <p class="username">{{ user.id_name }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="carousel-container">
+            <div class="carousel-slides">
+                <!-- 示例图片（实际应从后端动态获取） -->
+                <a href="{% url 'developer_show' %}" class="slide active">
+                    <img src="{% static 'to_show/show_1.jpg' %}" alt="首页">
+                </a>
+                <a href="{% url 'main_land' 22123729 %}" class="slide">
+                    <img src="{% static 'to_show/show_2.jpg' %}" alt="广告位招商">
+                </a>
+                <a href="https://www.jd.com/" class="slide">
+                    <img src="{% static 'to_show/show_4.jpg' %}" alt="广告1">
+                </a>
+                <a href="https://www.elearning.shu.edu.cn/" class="slide">
+                    <img src="{% static 'to_show/show_6.jpg' %}" alt="广告1">
+                </a>
+            </div>
+            
+            <!-- 导航指示器 -->
+            <div class="carousel-indicators"></div>
+            
+            <!-- 左右箭头 -->
+            <button class="carousel-prev">&lt;</button>
+            <button class="carousel-next">&gt;</button>
+        </div>
+
+        <h3 style="text-align: center;">促销商品</h3>
+        <div class="container">
+            {% for item in items %}
+            {% if item.goods_price < item.origin_price %}
+            <div class="content-item">
+                <div class="item-image">
+                    <a href="{% url 'detail' item.id %}">
+                        <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    </a>
+                </div>
+                <div class="item-info">
+                    <h2>{{ item.title }}</h2>
+                    <p class="simple-desc">{{ item.simple_description }}</p>
+                    <div class="item-meta">
+                        {% if item.goods_price < item.origin_price %}
+                            <p>
+                                <span style="text-decoration: line-through; color: gray;">￥{{ item.origin_price|floatformat:2 }}</span>
+                                <span class="price">￥{{ item.goods_price|floatformat:2 }}</span>
+                            </p>
+                        {% else %}
+                            <p class="price">￥{{ item.goods_price|floatformat:2 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="item-meta">
+                        <p class="stock">库存: {{ item.goods_rest_num }}，已售：{{ item.goods_sale_num }}</p>
+                        <p class="timestamp">发布于：{{ item.created_at|date:"Y-m-d H:i" }}</p>
+                        <p class="timestamp">卖家：
+                            <a href="{% url 'main_land' username=item.inserter %}">
+                                {{ item.inserter_name }}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+        
+        <h3 style="text-align: center;">全部商品</h3>
+        <div class="container">
+            {% for item in items %}
+            <div class="content-item">
+                <div class="item-image">
+                    <a href="{% url 'detail' item.id %}">
+                        <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    </a>
+                </div>
+                <div class="item-info">
+                    <h2>{{ item.title }}</h2>
+                    <p class="simple-desc">{{ item.simple_description }}</p>
+                    <div class="item-meta">
+                        {% if item.goods_price < item.origin_price %}
+                            <p>
+                                <span style="text-decoration: line-through; color: gray;">￥{{ item.origin_price|floatformat:2 }}</span>
+                                <span class="price">￥{{ item.goods_price|floatformat:2 }}</span>
+                            </p>
+                        {% else %}
+                            <p class="price">￥{{ item.goods_price|floatformat:2 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="item-meta">
+                        <p class="stock">库存: {{ item.goods_rest_num }}，已售：{{ item.goods_sale_num }}</p>
+                        <p class="timestamp">发布于：{{ item.created_at|date:"Y-m-d H:i" }}</p>
+                        <p class="timestamp">卖家：
+                            <a href="{% url 'main_land' username=item.inserter %}">
+                                {{ item.inserter_name }}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <script src='{% static "home.js" %}'></script>
+    </body>
+</html>

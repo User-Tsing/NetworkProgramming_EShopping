@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>模拟电商平台网页设计：个人主页</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'guide.css' %}">
+        <link rel="stylesheet" href="{% static 'style_mainland_delicated.css' %}">
+    </head>
+
+    <body>
+        <div class="main-a">
+            <div class="logo">
+                <a href="/">E-Shop</a>
+            </div>
+            <div class="search-container">
+                <form method="GET" action="/search/">
+                    <input type="text" name="q" class="search-input" 
+                        placeholder="搜索商品..." value="{{ request.GET.q }}">
+                    <button type="submit" class="search-button">搜索</button>
+                </form>
+            </div>
+            <div class="user-profile-container">
+                {% if customer == None %}
+                    <div class="auth-links">
+                        <a href="/login/">登录</a>
+                        <a href="/register/">注册</a>
+                    </div>
+                {% else %}
+                    <div class="user-profile">
+                        <form action="{% url 'logout' %}" method="post" class="logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-button">退出登录</button>
+                        </form>
+                        <div class="auth-links">
+                            <a href="{% url 'chat_list' %}">消息中心</a>
+                        </div>
+                        <div class="avatar-container">
+                            <a href="/main/">
+                                <img src="{{ customer.avatar.url }}" class="user-avatar" alt="头像">
+                            </a>
+                        </div>
+                        <p class="username">{{ customer.id_name }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if user == None %}
+        <form>
+            <a href="/login/">登录</a>
+            <a href="/register/">注册</a>
+        </form>
+        {% else %}
+        <div class="main_box">
+            <div class="profile-header">
+                <div class="main_img">
+                    <img src="{{ user.avatar.url }}" class="user-avatar" alt="头像" >
+                </div>
+                <div class="profile-info">
+                    <h2>{{ user.id_name }}</h2>
+                </div>
+            </div>
+            
+            <div class="profile-details">
+                <p><strong>简介：</strong>{{ user.bio }}</p>
+                <p><strong>地区：</strong>{{ user.location }}</p>
+            </div>
+            <div class="profile-actions">
+                <button onclick="location.href='{% url 'chat_room' user.id %}'" 
+                        class="chat-button">
+                    联系TA
+                </button>
+            </div>
+        </div>
+        {% endif %}
+
+        <h3 style="text-align: center;">TA的商品</h3>
+        <form class="container">
+            {% for item in goods %}
+            <div class="content-item">
+                <div class="item-image">
+                    <a href="{% url 'detail' item.id %}">
+                        <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    </a>
+                </div>
+                <div class="item-info">
+                    <h2>{{ item.title }}</h2>
+                    <p class="simple-desc">{{ item.simple_description }}</p>
+                    <div class="item-meta">
+                        <p class="price">¥{{ item.goods_price }}</p>
+                    </div>
+                    <div class="item-meta">
+                        <p class="stock">库存: {{ item.goods_rest_num }}</p>
+                        <p class="timestamp">{{ item.created_at|date:"Y-m-d H:i" }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </form>
+        
+        <script src='{% static "main_land.js" %}'></script>
+    </body>
+
+</html>

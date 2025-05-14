@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>模拟电商平台网页设计：个人主页</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'style_user.css' %}">
+    </head>
+    <body>
+        <h1>订单已确认签收。</h1>
+        <a href="{% url 'order_view' %}">
+            <div>返回界面</div>
+        </a>
+    </body>
+</html>

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}消息中心{% endblock %}
+
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'style_chatlist_delicated.css' %}">
+{% endblock %}
+
+{% block content %}
+<p></p>
+<br><br><br>
+
+<!-- 用户名片 -->
+<div class="user-card">
+    <img src="{{ request.user.custom_user.avatar.url }}" class="user-card-avatar">
+    <div class="user-card-info">
+        <h2 class="user-card-name">{{ request.user.custom_user.id_name }}</h2>
+        <p class="user-card-bio">{{ request.user.custom_user.bio|default:"暂无简介" }}</p>
+    </div>
+</div>
+
+<!-- 聊天列表 -->
+<div class="chat-list-enhanced">
+    <h2 class="chat-list-title">对话列表</h2>
+    
+    {% for conversation in conversations %}
+        <a href="{% url 'chat_room' conversation.other_user.id %}" class="chat-item-enhanced">
+            <img src="{{ conversation.other_user.avatar.url }}" class="chat-avatar-enhanced">
+            <div class="chat-info-enhanced">
+                <h3>{{ conversation.other_user.id_name }}</h3>
+                <p class="last-message-enhanced">
+                    {% if conversation.messages.last %}
+                        {{ conversation.messages.last.content|truncatechars:50 }}
+                    {% else %}
+                        开始对话吧！
+                    {% endif %}
+                </p>
+                <span class="timestamp-enhanced">{{ conversation.updated_at|timesince }}前</span>
+            </div>
+            {% if conversation.unread_count > 0 %}
+                <span class="unread-count">{{ conversation.unread_count }}</span>
+            {% endif %}
+        </a>
+    {% empty %}
+        <p class="empty-enhanced">暂无聊天记录</p>
+    {% endfor %}
+</div>
+{% endblock %}

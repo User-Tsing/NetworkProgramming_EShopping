@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>my home page</title>
+        {% load static %}
+        <link rel="stylesheet" href={% static "style.css" %}>  <!-- 导入版式集 -->
+        <script src={% static 'script_1.js' %}></script>
+    </head>
+    <body>
+        <div class="div_type_1">
+            <h1 class="my_style_1">模拟电商平台网络程序设计</h1>
+            <button id="button_1" class="button_1">按钮</button>
+            {% csrf_token %}  <!-- django令牌 -->
+        </div>
+        
+    </body>
+    
+
+</html>

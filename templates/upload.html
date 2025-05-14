@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>上传商品</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'guide.css' %}">
+    <link rel="stylesheet" href="{% static 'style_upload_delicated.css' %}">
+</head>
+<body>
+    <div class="main-a">
+            <div class="logo">
+                <a href="/">E-Shop</a>
+            </div>
+            <div class="user-profile-container">
+                {% if user == None %}
+                    <div class="auth-links">
+                        <a href="/login/">登录</a>
+                        <a href="/register/">注册</a>
+                    </div>
+                {% else %}
+                    <div class="user-profile">
+                        <form action="{% url 'logout' %}" method="post" class="logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-button">退出登录</button>
+                        </form>
+                        <div class="auth-links">
+                            <a href="{% url 'chat_list' %}">消息中心</a>
+                        </div>
+                        <div class="avatar-container">
+                            <a href="/main/">
+                                <img src="{{ user.avatar.url }}" class="user-avatar" alt="头像">
+                            </a>
+                        </div>
+                        <p class="username">{{ user.id_name }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+
+    <!-- 登录状态提示 -->
+    <!-- <div id="auth-status"></div> -->
+    {% if user == None %}
+
+    <div>
+        <a href="/login/">请先登录后再发布商品</a>
+    </div>
+
+    {% else %}
+    
+    <!-- 商品上传表单 -->
+    <form id="uploadForm" class="upload-form">
+        <h2>发布新商品</h2>
+        
+        <div class="form-group">
+            <label>商品标题*</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+
+        <div class="form-group">
+            <label>简略描述*</label>
+            <textarea id="simple_description" name="simple_description" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>详细描述</label>
+            <textarea id="description" name="description"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>商品图片*</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+            <div id="imagePreview"></div>
+        </div>
+
+        <div class="form-group">
+            <label>原产地*</label>
+            <input type="text" id="from_location" name="from_location" required>
+        </div>
+
+        <div class="form-group">
+            <label>价格*</label>
+            <input type="number" id="goods_price" name="goods_price" step="0.01" required>
+        </div>
+
+        <div class="form-group">
+            <label>原价*</label>
+            <input type="number" id="origin_price" name="origin_price" step="0.01" required>
+        </div>
+
+        <div class="form-group">
+            <label>库存数量*</label>
+            <input type="number" id="goods_rest_num" name="goods_rest_num" required>
+        </div>
+
+        <button type="submit">发布商品</button>
+    </form>
+
+    {% endif %}
+
+    <script src="{% static 'upload.js' %}"></script>
+</body>
+</html>

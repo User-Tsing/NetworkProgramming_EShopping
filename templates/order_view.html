@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>模拟电商平台网页设计：directed by STAssn</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'guide.css' %}">
+        <link rel="stylesheet" href="{% static 'style_orderview_delicated.css' %}">
+    </head>
+    <body>
+        <div class="main-a">
+            <div class="logo">
+                <a href="/">E-Shop</a>
+            </div>
+            <div class="user-profile-container">
+                {% if user == None %}
+                    <div class="auth-links">
+                        <a href="/login/">登录</a>
+                        <a href="/register/">注册</a>
+                    </div>
+                {% else %}
+                    <div class="user-profile">
+                        <form action="{% url 'logout' %}" method="post" class="logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-button">退出登录</button>
+                        </form>
+                        <div class="auth-links">
+                            <a href="{% url 'chat_list' %}">消息中心</a>
+                        </div>
+                        <div class="avatar-container">
+                            <a href="/main/">
+                                <img src="{{ user.avatar.url }}" class="user-avatar" alt="头像">
+                            </a>
+                        </div>
+                        <p class="username">{{ user.id_name }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="container">
+            {% for order in orders %}
+            <div>
+                <div class="order-card">
+                <div class="order-header">
+                    <span>订单号：{{ order.id }}</span>
+                    <span class="status">{{ order.get_status_display }}</span>
+                    <span>总价：¥{{ order.total_price|floatformat:2 }}</span>
+                    <span>下单时间：{{ order.created_at }}</span>
+                </div>
+                {% for item in order.order_item_set.all %}
+                <div class="order-item">
+                    <div class="content-item">
+                        <div class="item-image">
+                            <a href="{% url 'detail' item.product.id %}">
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.title }}">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="item-info">
+                        <h4>{{ item.product.title }}</h4>
+                        <p class="simple-desc">{{ item.product.simple_description }}</p>
+                        <div class="item-meta">
+                            <!-- <p class="price">¥{{ item.product.goods_price }}</p> -->
+                            <p>单价：<span class="price">¥{{ item.price|floatformat:2 }}</span> × {{ item.quantity }}</p>
+                        </div>
+                        <div class="item-meta">
+                            <p class="stock">库存: {{ item.product.goods_rest_num }}</p>
+                            <p class="timestamp">发布时间：{{ item.product.created_at|date:"Y-m-d H:i" }}</p>
+                        </div>
+                        <p>
+                            商品总价：<span class="price">¥{{ item.all_price|floatformat:2 }}</span>
+                        </p>
+                        <a href="/main_land/{{ item.seller.username }}/">
+                            <p>卖家：{{ item.custom_seller.id_name }}</p>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+                <form action="{% url 'user_check_order' order.id %}", method="post">
+                    {% if order.status == 'S' %}
+                    <div>
+                        {% csrf_token %}
+                        <button type="submit">确认签收</button>
+                    </div>
+                    {% elif order.status == 'P' %}
+                    <div>
+                        <button type="submit" disabled>已下单</button>
+                    </div>
+                    {% else %}
+                    <div>
+                        <button type="submit" disabled>已签收</button>
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+            </div>
+            
+            {% empty %}
+            <p class="empty">暂无购买记录</p>
+            {% endfor %}
+        </div>
+        <script src='{% static "home.js" %}'></script>
+    </body>
+</html>

@@ -1,0 +1,130 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.content-item {
+    background: red;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.content-item img {
+    max-width: 100%;
+    height: auto;
+    margin: 15px 0;
+    border-radius: 4px;
+}
+
+.timestamp {
+    color: #666;
+    font-size: 0.9em;
+    text-align: right;
+}
+
+
+/* static/style_2.css */
+.detail-content {
+    margin: 20px 0;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.detail-content img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.meta {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 15px;
+}
+
+
+/* 导航栏样式 */
+#main-nav {
+    background: linear-gradient(to right, #6110c4, #4ecdc4);
+    padding: 0 20px;
+    height: 60px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* 用户信息容器 */
+.user-profile {
+    position: absolute;  /* 绝对定位模式 */
+    right: 20px;         /* 距右侧距离 */
+    top: 50%;            /* 垂直居中起点 */
+    transform: translateY(-50%); /* 精确垂直居中 */
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 1000;       /* 确保在最顶层 */
+}
+
+.user-profile img {
+    width: 50px !important;   /* 直接指定像素尺寸 */
+    height: 50px !important;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    object-fit: cover;
+}
+
+/* 头像容器 */
+.avatar-container {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid white;
+}
+
+/* 头像图像 */
+.user-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 用户名样式 */
+.username {
+    margin: 0;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* 登录注册链接 */
+.auth-links {
+    display: flex;
+    gap: 20px;
+}
+
+.auth-links a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.auth-links a:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+
+

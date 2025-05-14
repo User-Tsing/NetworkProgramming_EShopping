@@ -1,0 +1,122 @@
+
+/* 全局样式 */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* 确保导航栏样式不受影响 */
+.main-a {
+    /* 这里可以添加额外的样式来确保导航栏与新样式兼容 */
+}
+
+/* 订单确认标题样式 */
+h1 {
+    margin-top: calc(var(--nav-height) + 20px);
+    text-align: center;
+    color: #2563eb;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+/* 订单摘要容器样式 */
+.order-summary {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 单个订单项目样式 */
+.order-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 20px 0;
+}
+
+.order-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.order-item p {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+    flex: 1;
+}
+
+.order-item label {
+    font-size: 0.9rem;
+    color: #999;
+    margin-right: 10px;
+}
+
+.order-item input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 150px;
+    font-size: 0.9rem;
+}
+
+/* 总价样式 */
+.total-price {
+    text-align: right;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2563eb;
+    margin-top: 20px;
+}
+
+/* 确认支付按钮样式 */
+button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #1e40af;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .order-summary {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .order-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .order-item img {
+        margin-bottom: 10px;
+    }
+
+    .order-item input[type="text"] {
+        width: 100%;
+        margin-top: 10px;
+    }
+}

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>模拟电商平台网页设计：个人主页</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'guide.css' %}">
+        <link rel="stylesheet" href="{% static 'style_usermain_delicated.css' %}">
+    </head>
+
+    <body>
+        <div class="main-a">
+            <div class="logo">
+                <a href="/">E-Shop</a>
+            </div>
+            <div class="search-container">
+                <form method="GET" action="/search/">
+                    <input type="text" name="q" class="search-input" 
+                        placeholder="搜索商品..." value="{{ request.GET.q }}">
+                    <button type="submit" class="search-button">搜索</button>
+                </form>
+            </div>
+            <div class="user-profile-container">
+                {% if user == None %}
+                    <div class="auth-links">
+                        <a href="/login/">登录</a>
+                        <a href="/register/">注册</a>
+                    </div>
+                {% else %}
+                    <div class="user-profile">
+                        <form action="{% url 'logout' %}" method="post" class="logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-button">退出登录</button>
+                        </form>
+                        <div class="auth-links">
+                            <a href="{% url 'chat_list' %}">消息中心</a>
+                        </div>
+                        <div class="avatar-container">
+                            <a href="/main/">
+                                <img src="{{ user.avatar.url }}" class="user-avatar" alt="头像">
+                            </a>
+                        </div>
+                        <p class="username">{{ user.id_name }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if user == None %}
+        <form>
+            <a href="/login/">登录</a>
+            <a href="/register/">注册</a>
+        </form>
+        {% else %}
+        <div class="main_box">
+            <div class="profile-header">
+                <div class="main_img">
+                    <img src="{{ user.avatar.url }}" class="user-avatar" alt="头像" 
+                        onclick="openEditModal('avatar')">  <!-- 点击触发弹窗 -->
+                </div>
+                <div class="profile-info">
+                    <h2 onclick="openEditModal('id_name')">{{ user.id_name }}</h2>  <!-- 点击可编辑 -->
+                    <div class="action-buttons">
+                        <button type="button" onclick="openEditModal('avatar')">更换头像</button>
+                        <button type="button" onclick="openEditModal('profile')">编辑资料</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="profile-details">
+                <p onclick="openEditModal('bio')"><strong>简介：</strong>{{ user.bio }}</p>
+                <p><strong>地区：</strong>{{ user.location }}</p>
+            </div>
+            <div>
+                <a href="/upload_goods/">
+                    <p>发布商品</p>
+                </a>
+                <a href="/bought_history/">
+                    <p>查看我的订单</p>
+                </a>
+                <a href="/goods_sale/">
+                    <p>查看我的商品</p>
+                </a>
+            </div>
+        </div>
+        <form class="cart-section">
+            <h4>购物车</h4>
+            {% if cart_items == None %}
+                <p>购物车为空</p>
+            {% else %}
+                {% for item in cart_items %}
+                <input  type="checkbox" 
+                        name="selected_items" 
+                        value="{{ item.id }}"
+                        onchange="calculateTotal()"
+                        class="check_box">
+                <div class="content-item_2">
+                    <div class="item-image">
+                        <a href="{% url 'detail' item.product.id %}">
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.title }}">
+                        </a>
+                    </div>
+                    <div class="item-info">
+                        <h2>{{ item.product.title }}</h2>
+                        <p class="simple-desc">{{ item.product.simple_description }}</p>
+                        <div class="item-meta">
+                            <p class="stock">库存: {{ item.product.goods_rest_num }}</p>
+                            <p class="price">¥{{ item.product.goods_price|floatformat:2 }}</p>
+                            <div class="stock">
+                                <span>购买数量：</span>
+                                <button type="button" onclick="decreaseQuantity({{ item.id }})">-</button>
+                                <span id="quantity-{{ item.id }}">{{ item.quantity }}</span>
+                                <button type="button" onclick="increaseQuantity({{ item.id }})">+</button>
+                            </div>
+                            <a href="/main_land/{{ item.product.inserter }}/">
+                                <p class="timestamp">卖家：{{ item.product.inserter_name }}</p>
+                            </a>
+                        </div>
+                        <div class="item-meta">
+                            <p class="timestamp">{{ item.added_at|date:"Y-m-d H:i" }}</p>
+                        </div>
+                        <div class="bad_item">
+                            <button type="button" onclick="deleteCartItem({{ item.id }})">删除</button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <div id="real-time-total">
+                    <p>总价：¥<span id="total-amount">0.00</span></p>
+                </div>
+                <button type="button" onclick="redirectToCheckout(event)">提交订单结算</button>
+                <div class="bad_item">
+                    <button type="button" onclick="deleteSelectedItems()" class="bad_item">删除选中商品</button>
+                </div>
+            {% endif %}
+        </form>
+        {% endif %}
+
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <form id="editForm" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div id="avatarEdit" class="edit-section">
+                        <h3>更换头像</h3>
+                        <input type="file" name="avatar" accept="image/*">
+                    </div>
+                    
+                    <div id="profileEdit" class="edit-section">
+                        <h3>编辑资料</h3>
+                        <label>显示名称：
+                            <input type="text" name="id_name" value="{{ user.id_name }}">
+                        </label>
+                        <label><p>个人简介：</p>
+                            <textarea name="bio">{{ user.bio }}</textarea>
+                        </label>
+                        <label>所在地区：
+                            <input type="text" name="location" value="{{ user.location }}">
+                        </label>
+                        <label><p></p></label>
+                    </div>
+                    <button type="submit">保存修改</button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            function redirectToCheckout(event) {
+                event.preventDefault(); // 阻止默认表单提交
+
+                const selectedIds = Array.from(
+                    document.querySelectorAll('input[name="selected_items"]:checked')
+                ).map(checkbox => checkbox.value);
+
+                if (selectedIds.length === 0) {
+                    alert('请选择要结算的商品');
+                    return;
+                }
+
+                // 修正参数名为items
+                window.location.href = `/checkout/?items=${selectedIds.join(',')}`;
+            }
+        </script>
+        <script src='{% static "user_main.js" %}'></script>
+        <script>
+            function decreaseQuantity(itemId) {
+                const quantityElement = document.getElementById(`quantity-${itemId}`);
+                let quantity = parseInt(quantityElement.textContent);
+                if (quantity > 1) {
+                    quantity--;
+                    updateQuantity(itemId, quantity);
+                    quantityElement.textContent = quantity;
+                    calculateTotal();
+                }
+            }
+
+            function increaseQuantity(itemId) {
+                const quantityElement = document.getElementById(`quantity-${itemId}`);
+                let quantity = parseInt(quantityElement.textContent);
+                quantity++;
+                updateQuantity(itemId, quantity);
+                quantityElement.textContent = quantity;
+                calculateTotal();
+            }
+
+            function updateQuantity(itemId, quantity) {
+                const csrftoken = getCookie('csrftoken');
+                fetch(`/update_cart_item_quantity/${itemId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken,
+                    },
+                    body: JSON.stringify({ quantity: quantity })
+                })
+               .then(response => response.json())
+               .then(data => {
+                    if (!data.success) {
+                        alert(data.error);
+                    }
+                });
+            }
+
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        </script>
+        <script>  // 不知道为啥只能在script里定义，在.js里定义不生效
+            function redirectToCheckout(event) {
+                event.preventDefault(); // 阻止默认表单提交
+
+                const selectedIds = Array.from(
+                    document.querySelectorAll('input[name="selected_items"]:checked')
+                ).map(checkbox => checkbox.value);
+
+                if (selectedIds.length === 0) {
+                    alert('请选择要结算的商品');
+                    return;
+                }
+
+                // 修正参数名为items
+                window.location.href = `/checkout/?items=${selectedIds.join(',')}`;
+            }
+
+            function deleteCartItem(itemId) {
+                const csrftoken = getCookie('csrftoken');
+                if (confirm('确定要删除该商品吗？')) {
+                    fetch(`/delete_cart_item/${itemId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrftoken,
+                        },
+                    })
+                   .then(response => response.json())
+                   .then(data => {
+                        if (data.success) {
+                            location.reload(); // 刷新页面
+                        } else {
+                            alert(data.error);
+                        }
+                    });
+                }
+            }
+
+            function deleteSelectedItems() {
+                const csrftoken = getCookie('csrftoken');
+                const selectedIds = Array.from(
+                    document.querySelectorAll('input[name="selected_items"]:checked')
+                ).map(checkbox => checkbox.value);
+
+                if (selectedIds.length === 0) {
+                    alert('请选择要删除的商品');
+                    return;
+                }
+
+                if (confirm('确定要删除选中的商品吗？')) {
+                    fetch('/delete_selected_cart_items/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrftoken,
+                        },
+                        body: JSON.stringify({ selected_ids: selectedIds })
+                    })
+                   .then(response => response.json())
+                   .then(data => {
+                        if (data.success) {
+                            location.reload(); // 刷新页面
+                        } else {
+                            alert(data.error);
+                        }
+                    });
+                }
+            }
+
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        </script>
+    </body>
+
+</html>

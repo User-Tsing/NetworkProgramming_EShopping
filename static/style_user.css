@@ -1,0 +1,578 @@
+
+.main_box {
+    background: linear-gradient(to right, #6110c4, #FF2F00);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 10%;
+    padding: 2%;
+}
+
+.main_img {
+    width: 105px;
+    height: 105px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid white;
+}
+
+.shopping_box {
+    background: linear-gradient(to right, #6110c4, #FF2F00);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 10%;
+    padding: 2%;
+}
+
+
+.check_box {
+    /* 隐藏原生样式 */
+    appearance: none;
+    -webkit-appearance: none;
+    
+    /* 设定尺寸 */
+    width: 20px;
+    height: 20px;
+    
+    /* 基础样式 */
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    vertical-align: middle;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+/* 选中状态 */
+.check_box:checked {
+    background: #2196F3;
+    border-color: #2196F3;
+}
+
+/* 勾选标记 */
+.check_box:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* 聚焦状态 */
+.check_box:focus {
+    outline: 2px solid #90caf9;
+    outline-offset: 2px;
+}
+
+
+/* 新版式样式 */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-info h2 {
+    margin: 0;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.profile-info h2:hover {
+    color: #4ecdc4;
+}
+
+.action-buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.action-buttons button {
+    background: #4ecdc4;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.profile-details {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.profile-details p {
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+
+
+
+
+/* 导航栏样式 */
+.main-a {
+    position: relative;
+    background: linear-gradient(to right, #6110c4, #4ecdc4);
+    padding: 0 20px;
+    height: 60px;
+    display: flex;
+    /* justify-content: flex-end; */
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 用户信息容器 */
+.user-profile {
+    position: absolute;
+    right: 20px;         /* 距右侧距离 */
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 1000;       /* 确保在最顶层 */
+}
+
+.user-profile img {
+    width: 50px !important;   /* 直接指定像素尺寸 */
+    height: 50px !important;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    object-fit: cover;
+}
+
+/* 头像容器 */
+.avatar-container {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid white;
+}
+
+/* 头像图像 */
+.user-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 用户名样式 */
+.username {
+    margin: 0;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* 登录注册链接 */
+.auth-links {
+    display: flex;
+    gap: 20px;
+}
+
+.auth-links a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.auth-links a:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+
+
+.search-container {
+    margin-right: 30px;
+    /* display: flex; */
+    flex: 1;
+    /* gap: 10px; */
+    max-width: 600px;
+}
+
+.search-input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 300px;
+}
+
+.search-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+
+.content-item_2 {
+    background: rgba(255,255,255,1);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.item-image {
+    flex: 0 0 200px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-info {
+    flex: 1;
+}
+
+.timestamp {
+    color: #666;
+    font-size: 0.9em;
+    text-align: right;
+}
+
+.price {
+    color: #FF0000;
+    font-size: 1.5em;
+    text-align: right;
+}
+
+.stock {
+    color: #666;
+    font-size: 0.9em;
+    text-align: right;
+}
+
+
+/* 模态窗口样式 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background: white;
+    margin: 15% auto;
+    padding: 20px;
+    width: 400px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.edit-section {
+    display: none;
+}
+
+.edit-section.active {
+    display: block;
+}
+
+input[type="file"] {
+    margin: 10px 0;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    margin: 10px 0;
+    padding: 8px;
+}
+
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.content-item {
+    background: rgba(225,75,0,0.1);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.logout-form {
+    display: inline;
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    cursor: pointer;
+    font: inherit;
+}
+
+.logout-button:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+
+
+/* 聊天列表样式 */
+.chat-list {
+    max-width: 800px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+.chat-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    text-decoration: none;
+    color: #333;
+}
+
+.chat-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.chat-info h3 {
+    margin: 0 0 5px 0;
+    color: #2c3e50;
+}
+
+.last-message {
+    color: #666;
+    margin: 0;
+    font-size: 0.9em;
+}
+
+.timestamp {
+    color: #999;
+    font-size: 0.8em;
+}
+
+/* 聊天室样式 */
+.message {
+    margin: 10px 0;
+    max-width: 70%;
+}
+
+.message.sent {
+    margin-left: auto;
+}
+
+.message-content {
+    background: #e9ecef;
+    padding: 10px 15px;
+    border-radius: 15px;
+    position: relative;
+}
+
+.message.sent .message-content {
+    background: #4ecdc4;
+    color: white;
+}
+
+.timestamp {
+    font-size: 0.75em;
+    color: #666;
+    display: block;
+    margin-top: 5px;
+}
+
+.message-input {
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+    border-top: 1px solid #eee;
+}
+
+.message-input textarea {
+    flex: 1;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: none;
+}
+
+.message-input button {
+    background: #4ecdc4;
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+/* 用户信息容器（头像+名字） */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+}
+
+/* 头像样式 */
+.user-info .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid white;
+    object-fit: cover;
+}
+
+/* 用户名样式 */
+.user-info h2 {
+    margin: 0;
+    color: blue;
+    font-size: 1.2em;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+
+/* 商品操作按钮 */
+.item-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.edit-btn {
+    background: #4ecdc4;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delist-btn {
+    background: #ff4757;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* 商品编辑表单 */
+.modal_goods {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+
+.modal_goods-content {
+    background: white;
+    /* margin: 15% auto; */
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    width: 400px;
+    border-radius: 8px;
+    /* position: relative; */
+}
+
+.form-group {
+    margin: 15px 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-group textarea {
+    height: 80px;
+}
+
+/* 横向布局容器 */
+.form-row {
+    display: flex;
+    gap: 15px;  /* 表单项间距 */
+    margin-bottom: 15px;
+}
+
+/* 横向布局中的表单项 */
+.form-row .form-group {
+    flex: 1;  /* 自动平分宽度 */
+    min-width: 120px;  /* 防止内容过窄 */
+}
+
+/* 调整文件上传按钮样式 */
+.form-row input[type="file"] {
+    margin-top: 24px;  /* 对齐标签 */
+}
+
+.form-row .form-group input[type="text"],
+.form-row .form-group input[type="number"],
+.form-row .form-group input[type="file"] {
+    width: 100%;  /* 输入框填满容器 */
+}
+
+
+

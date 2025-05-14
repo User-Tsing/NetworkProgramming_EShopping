@@ -1,0 +1,160 @@
+在 Django 框架中，对模型进行增删改查（CRUD）操作主要通过视图（views.py）与模型管理器（Model Manager）实现。以下是针对模型 `Post` 的详细操作示例：
+
+---
+
+### **1. 增加（Create）**
+在视图中处理表单提交，创建新数据并保存到数据库。
+
+```python
+from django.shortcuts import render, redirect
+from .models import Post
+from django.contrib import messages
+
+def create_post(request):
+    if request.method == 'POST':
+        # 从请求中提取数据
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        
+        # 验证必填字段
+        if not title:
+            messages.error(request, "标题不能为空！")
+            return render(request, 'create_post.html')
+        
+        # 创建并保存新对象
+        Post.objects.create(
+            title=title,
+            content=content
+        )
+        messages.success(request, "文章创建成功！")
+        return redirect('post_list')  # 重定向到文章列表页
+    
+    return render(request, 'create_post.html')
+```
+
+---
+
+### **2. 查询（Read）**
+#### **(1) 查询所有数据**
+```python
+def post_list(request):
+    posts = Post.objects.all().order_by('-created_at')  # 按创建时间降序排列
+    return render(request, 'post_list.html', {'posts': posts})
+```
+
+#### **(2) 查询单个数据**
+```python
+from django.shortcuts import get_object_or_404
+
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)  # 找不到则返回404
+    return render(request, 'post_detail.html', {'post': post})
+```
+
+---
+
+### **3. 更新（Update）**
+获取现有对象，修改字段后保存。
+
+```python
+def update_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    
+    if request.method == 'POST':
+        new_title = request.POST.get('title')
+        new_content = request.POST.get('content')
+        
+        if not new_title:
+            messages.error(request, "标题不能为空！")
+            return render(request, 'update_post.html', {'post': post})
+        
+        # 更新字段
+        post.title = new_title
+        post.content = new_content
+        post.save()  # 保存更改
+        
+        messages.success(request, "文章更新成功！")
+        return redirect('post_detail', post_id=post.id)
+    
+    return render(request, 'update_post.html', {'post': post})
+```
+
+---
+
+### **4. 删除（Delete）**
+获取对象并调用 `delete()` 方法。
+
+```python
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    
+    if request.method == 'POST':
+        post.delete()  # 删除对象
+        messages.success(request, "文章已删除！")
+        return redirect('post_list')
+    
+    return render(request, 'confirm_delete.html', {'post': post})
+```
+
+---
+
+### **关键要点**
+1. **模型管理器（`objects`）**：  
+   - `Post.objects.create()`：直接创建并保存对象。  
+   - `Post.objects.all()`：获取所有对象。  
+   - `Post.objects.get()`：获取单个对象（需确保唯一性，否则抛异常）。  
+   - `Post.objects.filter()`：根据条件过滤对象。
+
+2. **错误处理**：  
+   - 使用 `get_object_or_404` 替代 `get`，避免因无效 ID 导致服务器错误。  
+   - 验证用户输入（如必填字段），并通过 `messages` 反馈错误。
+
+3. **权限控制**：  
+   - 使用 `@login_required` 装饰器限制登录用户访问。  
+   - 检查用户是否有权修改/删除对象（如 `if request.user == post.author`）。
+
+4. **模板交互**：  
+   - 在模板中遍历对象列表：  
+     ```html
+     {% for post in posts %}
+         <h2>{{ post.title }}</h2>
+         <p>{{ post.content }}</p>
+     {% endfor %}
+     ```
+   - 渲染表单字段：  
+     ```html
+     <form method="post">
+         {% csrf_token %}
+         <input type="text" name="title" value="{{ post.title }}">
+         <textarea name="content">{{ post.content }}</textarea>
+         <button type="submit">保存</button>
+     </form>
+     ```
+
+---
+
+### **完整示例 URL 配置**
+```python
+# urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('posts/', views.post_list, name='post_list'),
+    path('posts/create/', views.create_post, name='create_post'),
+    path('posts/<int:post_id>/', views.post_detail, name='post_detail'),
+    path('posts/<int:post_id>/update/', views.update_post, name='update_post'),
+    path('posts/<int:post_id>/delete/', views.delete_post, name='delete_post'),
+]
+```
+
+---
+
+### **总结**
+通过 Django 的模型管理器和视图函数，可以轻松实现对数据库的增删改查操作。核心步骤包括：
+1. **增**：使用 `Model.objects.create()` 或实例化后 `save()`。
+2. **查**：利用 `all()`、`get()`、`filter()` 查询数据。
+3. **改**：获取对象后修改字段并 `save()`。
+4. **删**：调用 `delete()` 方法删除对象。
+
+结合表单验证、权限控制和模板渲染，可构建安全高效的 Web 应用。
