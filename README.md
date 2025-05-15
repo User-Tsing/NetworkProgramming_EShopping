@@ -12,7 +12,7 @@ Directed by STAssn
 实现购买商品后的评价系统     
 
 
-配置方式：确认环境配置正常，主要适配django。以下命令均在PyCharm Community终端运行      
+配置方式：确认环境配置正常，主要适配django。以下命令均在PyCharm Community（或PyCharm Professional）终端运行      
 创建django项目：django-admin startproject  (若为PyCharm Professional在创建项目时选Django)       
 配置APP：python manage.py startapp APP_NAME      
 配置迁移数据库：python manage.py makemigrations,  python manage.py migrate      
