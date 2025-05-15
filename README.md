@@ -11,7 +11,7 @@ Directed by STAssn
 实现用户之间的即时通讯。     
 实现购买商品后的评价系统。     
 
-未实现功能：没有原始数据，有需要的可以去网络上挖取相关数据。
+未实现功能：没有原始商品数据，有需要的可以去网络上挖取相关数据。（为保护个人信息等settings.py、db.sqlite3均未上传，请自行配置）    
 
 配置方式：确认环境配置正常，主要适配django。以下命令均在PyCharm Community（或PyCharm Professional）终端运行      
 创建django项目：django-admin startproject  (若为PyCharm Professional在创建项目时选Django)       
