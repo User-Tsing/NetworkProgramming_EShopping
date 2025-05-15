@@ -22,7 +22,7 @@ Directed by STAssn
 创建超级用户：python manage.py createsuperuser       
 运行方式：打开pycharm，进入终端，查看地址确认与manage.py在同一目录，输入： python manage.py runserver，并运行然后进入浏览器运行127.0.0.1:8000          
 
-联机部署：
+联机部署：      
 settings.py关闭DEBUG，使用ALLOWED_HOSTS = ['*']，终端使用python manage.py runserver 0.0.0.0:8000，在同一局域网内通过服务器机的IP地址访问网站，对服务器机配置有要求。      
 使用云端托管网站如PythonAnywhere等，利用账号网页访问网站，但有一定限制。       
 
