@@ -579,7 +579,7 @@ def user_check_order(request, order_id):
     if request.method == 'POST':
         print(request.user.username)
         order_it = Order.objects.get(id=order_id)
-        if request.user.username == order_it.seller.username:
+        if request.user.username == order_it.user.username:
             Order.objects.filter(id=order_id).update(
                 status='C',
             )
