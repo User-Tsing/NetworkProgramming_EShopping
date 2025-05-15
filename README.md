@@ -14,14 +14,14 @@ Directed by STAssn
 
 配置方式：确认环境配置正常，主要适配django。以下命令均在PyCharm Community终端运行      
 创建django项目：django-admin startproject  (若为PyCharm Professional在创建项目时选Django)       
-配置APP：python manage.py startapp APP_NAME
-配置迁移数据库：python manage.py makemigrations,  python manage.py migrate     
-创建超级用户：python manage.py createsuperuser
+配置APP：python manage.py startapp APP_NAME      
+配置迁移数据库：python manage.py makemigrations,  python manage.py migrate      
+创建超级用户：python manage.py createsuperuser       
 运行方式：打开pycharm，进入终端，查看地址确认与manage.py在同一目录，输入： python manage.py runserver，并运行然后进入浏览器运行127.0.0.1:8000          
 
-自定义配置：
-后端：models.py中设定模型（每次修改须重新迁移数据库），views.py中设定后端交互效果，urls.py中配置路由并绑定views.py中的效果，     
-前端：.html文件设定界面模块，.js文件设定界面交互效果，.css文件设定界面版式，其中.html是主要部分，其中有调用对应的.js和.css            
+自定义配置：     
+后端：models.py中设定模型（每次修改须重新迁移数据库），views.py中设定后端交互效果，urls.py中配置路由并绑定views.py中的效果，      
+前端：.html文件设定界面模块，.js文件设定界面交互效果，.css文件设定界面版式，其中.html是主要部分，其中有调用对应的.js和.css             
 
 上传是为了纪念做过的课程项目。     
 Directed by STAssn     
