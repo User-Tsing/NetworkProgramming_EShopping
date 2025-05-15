@@ -25,4 +25,4 @@ Directed by STAssn
 
 上传是为了纪念做过的课程项目。     
 Directed by STAssn     
-Participants:Y Yang, H Mao    
+Participants: Y Yang, H Mao    
